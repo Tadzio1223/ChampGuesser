@@ -1,13 +1,11 @@
 from champ_setup import Champion, Guess
 import pandas as pd
 
-data = pd.read_json('champions.json')
+data = pd.read_json('champions.json') #Reads champions database
 names = data.name.to_list()
-
 is_game_over = False
 
-champion = Champion('Akali')
-
+champion = Champion()
 
 def check_guess(user_input):
     guess = Guess(user_input)
