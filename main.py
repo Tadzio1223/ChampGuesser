@@ -10,42 +10,26 @@ champion = Champion()
 def check_guess(user_input):
     guess = Guess(user_input)
     #Checks if the user's champion has mutual lanes info in the champion's lanes
-    for lane in guess.lanes:
-        if lane not in champion.lanes:
-            print(f'not {lane}')
     if guess.lanes == champion.lanes:
-        print(f'{champion.lanes}')
+        print(f'Lanes: {guess.lanes}')
+    elif any(lane in guess.lanes for lane in champion.lanes):
+        print(f'Lanes: One of {guess.lanes}')
     else:
-        for lane in guess.lanes:
-            if lane in champion.lanes:
-                print(f'{lane} + more')
-    #Checks if the user's champion has mutual species info in the champion's species
-    if guess.species == champion.species:
-        print(f'{guess.species}')
-    else:
-        print(f'not {guess.species}')
-    #Checks if the user's champion has mutual resource info in the champion's resources
-    if guess.resource == champion.resource:
-        print(f'{guess.resource}')
-    else:
-        print(f'not {guess.resource}')
-    #Checks if the user's champion has mutual range_type info in the champion's range_types
-    if guess.range_type == champion.range_type:
-        print(f'{guess.range_type}')
-    else:
-        print(f'not {champion.range_type}')
-    #Checks if the user's champion has mutual region info in the champion's regions
-    if guess.region == champion.region:
-        print(f'{guess.region}')
-    else:
-        print(f'not {guess.region}')
+        print(f'Lanes: Not {guess.lanes}')
+    #Checks other attributes of the guess and champion
+    for attribute_name, attribute_value in vars(champion).items():
+        if attribute_name in ['species', 'resource', 'range_type', 'region']:
+            if getattr(guess, attribute_name) == getattr(champion, attribute_name):
+                print(f'{attribute_name.title().replace("_"," ")}: {getattr(guess, attribute_name)}')
+            else:
+                print(f'{attribute_name.title().replace("_"," ")}: Not {getattr(guess, attribute_name)}')
     #Compares the user's champion's release date to the champion's release date
     if int(guess.release_date[:4]) == int(champion.release_date[:4]):
-        print(f'{guess.release_date}\n')
+        print(f'Release date: {guess.release_date[:4]}\n')
     elif int(guess.release_date[:4]) > int(champion.release_date[:4]):
-        print(f'Earlier than {guess.release_date[:4]}\n')
+        print(f'Release date: Earlier than {guess.release_date[:4]}\n')
     elif int(guess.release_date[:4]) < int(champion.release_date[:4]):
-        print(f'Later than {guess.release_date[:4]}\n')
+        print(f'Release date: Later than {guess.release_date[:4]}\n')
 
 while not is_game_over:
     try:
